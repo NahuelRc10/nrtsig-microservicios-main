@@ -29,8 +29,6 @@ public class TipoCarrera {
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
-	@OneToMany(mappedBy = "tipoCarrera")
-	private List<Carrera> carreras;
 	
 	public TipoCarrera() {}
 	
@@ -61,14 +59,6 @@ public class TipoCarrera {
 	
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
-	}
-	
-	public List<Carrera> getCarreras() {
-		return carreras;
-	}
-	
-	public void setCarreras(List<Carrera> carreras) {
-		this.carreras = carreras;
 	}
 	
 }
