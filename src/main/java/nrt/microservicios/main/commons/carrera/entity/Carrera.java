@@ -1,5 +1,6 @@
 package nrt.microservicios.main.commons.carrera.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "carreras")
@@ -24,35 +28,42 @@ public class Carrera {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@Column(name = "id")
 	private Long id;
 	@Column(name = "nombre")
+	@NotEmpty
 	private String nombre;
-	@Column(name = "nombre_corto")
+	@Column(name =  "nombre_corto")
+	@NotEmpty
 	private String nombreCorto;
 	@Column(name = "duracion")
+	@NotNull
 	private Integer duracion;
 	@Column(name = "descripcion")
+	@NotEmpty
 	private String descripcion;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
 	@ManyToOne
-	@JoinColumn(name = "id_tipo_carrera", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "id_tipo_carrera")
 	private TipoCarrera tipoCarrera;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_departamento", referencedColumnName = "id")
-	private Departamento departamento;
-	@OneToMany(mappedBy = "carrera")
+	@ManyToOne
+	@JoinColumn(name = "id_departamento")
+	private Departamento Departamento;
+	@JsonIgnoreProperties(value = {"carrera", "hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
 	private List<PlanCarrera> planesCarrera;
-	
-	public Carrera() {}
+
+	public Carrera() {
+		this.planesCarrera = new ArrayList<PlanCarrera>();
+	}
 	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -110,11 +121,11 @@ public class Carrera {
 	}
 
 	public Departamento getDepartamento() {
-		return departamento;
+		return Departamento;
 	}
 
 	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
+		Departamento = departamento;
 	}
 
 	public List<PlanCarrera> getPlanesCarrera() {
@@ -124,5 +135,5 @@ public class Carrera {
 	public void setPlanesCarrera(List<PlanCarrera> planesCarrera) {
 		this.planesCarrera = planesCarrera;
 	}
-	
+
 }

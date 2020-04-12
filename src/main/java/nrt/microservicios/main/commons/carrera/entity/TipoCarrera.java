@@ -1,14 +1,12 @@
 package nrt.microservicios.main.commons.carrera.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,31 +30,31 @@ public class TipoCarrera {
 	
 	public TipoCarrera() {}
 	
-	@PrePersist
+	@PrePersist 
 	public void prePersist() {
 		this.createAt = new Date();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getTipoCarrera() {
 		return tipoCarrera;
 	}
-	
+
 	public void setTipoCarrera(String tipoCarrera) {
 		this.tipoCarrera = tipoCarrera;
 	}
-	
+
 	public Date getCreateAt() {
-		return this.createAt;
-	} 
-	
+		return createAt;
+	}
+
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}

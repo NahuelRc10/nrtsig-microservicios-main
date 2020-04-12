@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,18 +28,14 @@ public class InscripcionCarrera {
 	@Column(name = "fecha_inscripcion")
 	@NotNull
 	private Date fechaInscripcion;
-	@Column(name = "nota_promedio")
+	@Column(name = "nota_promedio", nullable = true)
 	private Double notaPromedio;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
-	@Column(name = "cantidad_asignaturas")
-	private Integer cantidadAsignaturasAprobadas;
-	@ManyToOne(fetch = FetchType.LAZY)
-	private PlanCarrera planCarrera;
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Alumno alumno;
-	@Column(name = "fecha_egreso")
+	@Column(name = "cantidad_asignaturas", nullable = true)
+	private Integer cantidadAsignaturasAprob;
+	@Column(name = "fecha_egreso", nullable = true)
 	private Date fechaEgreso;
 	@ManyToOne
 	@JoinColumn(name = "id_estado")
@@ -48,15 +43,18 @@ public class InscripcionCarrera {
 	@ManyToOne
 	@JoinColumn(name = "id_estado_inscripcion")
 	private EstadoInscripcion estadoInscripcion;
+	@ManyToOne
+	@JoinColumn(name = "id_alumno")
+	private Alumno alumno;
+	@ManyToOne
+	@JoinColumn(name = "id_plan_carrera")
+	private PlanCarrera planCarrera;
 
 	public InscripcionCarrera() {}
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
-		this.notaPromedio = 0.0;
-		this.fechaEgreso = null;
-		this.cantidadAsignaturasAprobadas = 0;
 	}
 	
 	public Long getId() {
@@ -91,28 +89,12 @@ public class InscripcionCarrera {
 		this.createAt = createAt;
 	}
 
-	public Integer getCantidadAsignaturasAprobadas() {
-		return cantidadAsignaturasAprobadas;
+	public Integer getCantidadAsignaturasAprob() {
+		return cantidadAsignaturasAprob;
 	}
 
-	public void setCantidadAsignaturasAprobadas(Integer cantidadAsignaturasAprobadas) {
-		this.cantidadAsignaturasAprobadas = cantidadAsignaturasAprobadas;
-	}
-
-	public PlanCarrera getPlanCarrera() {
-		return planCarrera;
-	}
-
-	public void setPlanCarrera(PlanCarrera planCarrera) {
-		this.planCarrera = planCarrera;
-	}
-
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
+	public void setCantidadAsignaturasAprob(Integer cantidadAsignaturasAprob) {
+		this.cantidadAsignaturasAprob = cantidadAsignaturasAprob;
 	}
 
 	public Date getFechaEgreso() {
@@ -137,6 +119,22 @@ public class InscripcionCarrera {
 
 	public void setEstadoInscripcion(EstadoInscripcion estadoInscripcion) {
 		this.estadoInscripcion = estadoInscripcion;
+	}
+
+	public Alumno getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
+
+	public PlanCarrera getPlanCarrera() {
+		return planCarrera;
+	}
+
+	public void setPlanCarrera(PlanCarrera planCarrera) {
+		this.planCarrera = planCarrera;
 	}
 
 }

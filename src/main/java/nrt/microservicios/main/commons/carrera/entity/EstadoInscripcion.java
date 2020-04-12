@@ -11,6 +11,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "estados_inscripcion")
@@ -21,20 +22,22 @@ public class EstadoInscripcion {
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "codigo")
+	@NotEmpty
 	private String codigo;
 	@Column(name = "descripcion")
+	@NotEmpty
 	private String descripcion;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
-
+	
 	public EstadoInscripcion() {}
-
+	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

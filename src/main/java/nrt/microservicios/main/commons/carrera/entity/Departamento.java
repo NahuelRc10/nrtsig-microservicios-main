@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,17 +21,15 @@ public class Departamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "denominacion")
-	@NotEmpty
-	private String denominacion;
 	@Column(name = "codigo")
 	@NotEmpty
 	private String codigo;
+	@Column(name = "denominacion")
+	@NotEmpty
+	private String denominacion;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
-	@OneToOne
-	private Carrera carrera;
 	
 	public Departamento() {}
 	
@@ -40,21 +37,13 @@ public class Departamento {
 	public void prePersist() {
 		this.createAt = new Date();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getDenominacion() {
-		return denominacion;
-	}
-
-	public void setDenominacion(String denominacion) {
-		this.denominacion = denominacion;
 	}
 
 	public String getCodigo() {
@@ -65,20 +54,20 @@ public class Departamento {
 		this.codigo = codigo;
 	}
 
+	public String getDenominacion() {
+		return denominacion;
+	}
+
+	public void setDenominacion(String denominacion) {
+		this.denominacion = denominacion;
+	}
+
 	public Date getCreateAt() {
 		return createAt;
 	}
 
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
-	}
-	
-	public Carrera getCarrera() {
-		return carrera;
-	}
-	
-	public void setCarrera(Carrera carrera) {
-		this.carrera = carrera;
 	}
 
 }

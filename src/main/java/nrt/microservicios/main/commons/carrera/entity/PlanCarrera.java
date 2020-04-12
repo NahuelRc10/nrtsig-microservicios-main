@@ -20,8 +20,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import nrt.microservicios.main.commons.usuario.entity.Alumno;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ 
 @Entity
 @Table(name = "plan_carreras")
 public class PlanCarrera {
@@ -33,7 +33,7 @@ public class PlanCarrera {
 	@Column(name = "anio_plan")
 	@NotNull
 	private Integer anioPlan;
-	@Column(name = "fecha_cierre")
+	@Column(name = "fecha_cierre", nullable = true)
 	private Date fechaCierre;
 	@Column(name = "resolucion")
 	@NotEmpty
@@ -41,17 +41,21 @@ public class PlanCarrera {
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	@JsonIgnoreProperties(value = {"planesCarrera", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
-	@JoinColumn(name = "id_carrera", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "id_carrera")
 	private Carrera carrera;
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_plan_carrera")
-	private List<Alumno> alumnosInscriptos;
-	
-	public PlanCarrera() {
-		this.alumnosInscriptos = new ArrayList<Alumno>();
-	}
+	@ManyToOne
+	@JoinColumn(name = "id_departamento")
+	private Departamento departamento;
+	@JsonIgnoreProperties(value = {"planCarrera", "carrera", "planesCarrera", "alumno", "hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "planCarrera", fetch = FetchType.LAZY)
+	private List<InscripcionCarrera> alumnosInscriptos;
 
+	public PlanCarrera() {
+		this.alumnosInscriptos = new ArrayList<InscripcionCarrera>();
+	}
+	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
@@ -96,21 +100,29 @@ public class PlanCarrera {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
-
+	
 	public Carrera getCarrera() {
 		return carrera;
 	}
-
+	
 	public void setCarrera(Carrera carrera) {
 		this.carrera = carrera;
 	}
 
-	public List<Alumno> getAlumnosInscriptos() {
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+	
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+	public List<InscripcionCarrera> getAlumnosInscriptos() {
 		return alumnosInscriptos;
 	}
 
-	public void setAlumnosInscriptos(List<Alumno> alumnosInscriptos) {
+	public void setAlumnosInscriptos(List<InscripcionCarrera> alumnosInscriptos) {
 		this.alumnosInscriptos = alumnosInscriptos;
 	}
-
+	
 }
