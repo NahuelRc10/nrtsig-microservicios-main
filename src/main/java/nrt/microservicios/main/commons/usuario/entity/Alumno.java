@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -21,6 +22,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import nrt.microservicios.main.commons.carrera.entity.InscripcionCarrera;
@@ -67,6 +69,10 @@ public class Alumno {
 	@Column(name = "sexo")
 	@NotEmpty
 	private String sexo;
+	@Column(name = "foto")
+	@Lob
+	@JsonIgnore
+	private byte[] foto;
 	@ManyToOne
 	@JoinColumn(name = "id_ciudad")
 	private Ciudad ciudad;
@@ -84,6 +90,11 @@ public class Alumno {
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
+	}
+	
+	// Metodo para retornar un identificador de la foto, se debe serializar en el json
+	public Integer getFotoHashCode() {
+		return (this.foto != null) ? this.foto.hashCode() : null;
 	}
 
 	public Long getId() {
@@ -180,6 +191,14 @@ public class Alumno {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+	
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 
 	public Ciudad getCiudad() {
