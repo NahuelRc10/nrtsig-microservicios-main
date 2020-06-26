@@ -54,6 +54,8 @@ public class Carrera {
 	@JsonIgnoreProperties(value = {"carrera", "hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
 	private List<PlanCarrera> planesCarrera;
+	@Column(name = "carrera_activa")
+	private Boolean carreraActiva;
 
 	public Carrera() {
 		this.planesCarrera = new ArrayList<PlanCarrera>();
@@ -136,4 +138,12 @@ public class Carrera {
 		this.planesCarrera = planesCarrera;
 	}
 
+	public Boolean getCarreraActiva() {
+		return carreraActiva;
+	}
+
+	public void setCarreraActiva(Boolean carreraActiva) {
+		this.carreraActiva = carreraActiva;
+	}
+	
 }

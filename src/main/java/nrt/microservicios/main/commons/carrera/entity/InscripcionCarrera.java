@@ -15,6 +15,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import nrt.microservicios.main.commons.usuario.entity.Alumno;
 
 @Entity
@@ -43,9 +45,11 @@ public class InscripcionCarrera {
 	@ManyToOne
 	@JoinColumn(name = "id_estado_inscripcion")
 	private EstadoInscripcion estadoInscripcion;
+	@JsonIgnoreProperties(value = {"carreras", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_alumno")
 	private Alumno alumno;
+	@JsonIgnoreProperties(value = {"alumnosInscriptos", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_plan_carrera")
 	private PlanCarrera planCarrera;
