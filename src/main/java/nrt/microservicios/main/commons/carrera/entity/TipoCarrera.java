@@ -12,10 +12,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tipo_carreras")
 public class TipoCarrera {
+	
+	private static final String PRE_GRADO = "PRE-GRADO";
+	private static final String GRADO = "GRADO";
+	private static final String POS_GRADO = "POS-GRADO";
+	private static final String MAESTRIA = "MAESTRIA";
+	private static final String DOCTORADO = "DOCTORADO";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +31,12 @@ public class TipoCarrera {
 	@Column(name = "tipo_carrera")
 	@NotEmpty
 	private String tipoCarrera;
+	@Column(name = "cant_min_anios")
+	@NotNull
+	private Integer cantidadMinAnios;
+	@Column(name = "cant_max_anios")
+	@NotNull
+	private Integer cantidadMaxAnios;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
@@ -50,7 +63,23 @@ public class TipoCarrera {
 	public void setTipoCarrera(String tipoCarrera) {
 		this.tipoCarrera = tipoCarrera;
 	}
+	
+	public Integer getCantidadMinAnios() {
+		return cantidadMinAnios;
+	}
+	
+	public void setCantidadMinAnios(Integer cantidadMinAnios) {
+		this.cantidadMinAnios = cantidadMinAnios;
+	}
 
+	public Integer getCantidadMaxAnios() {
+		return cantidadMaxAnios;
+	}
+	
+	public void setCantidadMaxAnios(Integer cantidadMaxAnios) {
+		this.cantidadMaxAnios = cantidadMaxAnios;
+	}
+	
 	public Date getCreateAt() {
 		return createAt;
 	}

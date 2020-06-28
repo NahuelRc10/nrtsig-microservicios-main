@@ -40,7 +40,6 @@ public class Carrera {
 	@NotNull
 	private Integer duracion;
 	@Column(name = "descripcion")
-	@NotEmpty
 	private String descripcion;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
