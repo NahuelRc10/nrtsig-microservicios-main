@@ -49,7 +49,7 @@ public class Carrera {
 	private TipoCarrera tipoCarrera;
 	@ManyToOne
 	@JoinColumn(name = "id_departamento")
-	private Departamento Departamento;
+	private Departamento departamento;
 	@JsonIgnoreProperties(value = {"carrera", "hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
 	private List<PlanCarrera> planesCarrera;
@@ -122,11 +122,11 @@ public class Carrera {
 	}
 
 	public Departamento getDepartamento() {
-		return Departamento;
+		return departamento;
 	}
 
 	public void setDepartamento(Departamento departamento) {
-		Departamento = departamento;
+		this.departamento = departamento;
 	}
 
 	public List<PlanCarrera> getPlanesCarrera() {
