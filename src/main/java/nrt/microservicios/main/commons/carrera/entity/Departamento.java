@@ -17,11 +17,11 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "departamentos")
 public class Departamento {
 
-	private static final String DPTO_TECNOLOGIA = "DT";
-	private static final String DPTO_QUIMICA = "DQ";
-	private static final String DPTO_MECANICA = "DM";
-	private static final String DPTO_CIENCIAS_BASICAS = "DCB";
-	private static final String DPTO_AUDIOVISUAL = "DA";
+	public static final String DPTO_TECNOLOGIA = "DT";
+	public static final String DPTO_QUIMICA = "DQ";
+	public static final String DPTO_MECANICA = "DM";
+	public static final String DPTO_CIENCIAS_BASICAS = "DCB";
+	public static final String DPTO_AUDIOVISUAL = "DA";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

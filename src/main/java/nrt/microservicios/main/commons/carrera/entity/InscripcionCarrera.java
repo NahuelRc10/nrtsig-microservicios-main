@@ -92,7 +92,7 @@ public class InscripcionCarrera {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
-
+	
 	public Integer getCantidadAsignaturasAprob() {
 		return cantidadAsignaturasAprob;
 	}

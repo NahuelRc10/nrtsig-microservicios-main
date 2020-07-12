@@ -16,6 +16,11 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "estados_carrera")
 public class EstadoCarrera {
+	
+	public static final String EN_ESPERA = "E";
+	public static final String EGRESADO = "EG";
+	public static final String EN_CURSO = "C";
+	public static final String LIBRE = "L";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

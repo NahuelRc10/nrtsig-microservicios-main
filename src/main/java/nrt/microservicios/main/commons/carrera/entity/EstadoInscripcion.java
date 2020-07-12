@@ -17,6 +17,10 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "estados_inscripcion")
 public class EstadoInscripcion {
 
+	public static final String PRE_INSCRIPCION = "PI";
+	public static final String CONFIRMADA = "C";
+	public static final String NO_APROBADA = "NA";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

@@ -18,11 +18,11 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tipo_carreras")
 public class TipoCarrera {
 	
-	private static final String PRE_GRADO = "PRE-GRADO";
-	private static final String GRADO = "GRADO";
-	private static final String POS_GRADO = "POS-GRADO";
-	private static final String MAESTRIA = "MAESTRIA";
-	private static final String DOCTORADO = "DOCTORADO";
+	public static final String PRE_GRADO = "PRE-GRADO";
+	public static final String GRADO = "GRADO";
+	public static final String POS_GRADO = "POS-GRADO";
+	public static final String MAESTRIA = "MAESTRIA";
+	public static final String DOCTORADO = "DOCTORADO";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
