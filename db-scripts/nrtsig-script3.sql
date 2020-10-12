@@ -36,6 +36,12 @@ insert into comisiones(id, numero_comision, capacidad_maxima, capacidad_actual, 
 insert into comisiones(id, numero_comision, capacidad_maxima, capacidad_actual, create_at, id_plan_carrera) values(default, 402, 20, 10, current_date(), (select p.id from plan_carreras p where p.id_carrera = 1 and p.fecha_cierre is null));
 insert into comisiones(id, numero_comision, capacidad_maxima, capacidad_actual, create_at, id_plan_carrera) values(default, 501, 20, 8, current_date(), (select p.id from plan_carreras p where p.id_carrera = 1 and p.fecha_cierre is null));
 
+-- Agregamos la columna turno_cursado
+alter table comisiones add column turno_cursado int;
+
+-- Actualizamos los registros de la tabla comisiones
+update comisiones set turno_cursado = 1 where id > 0;
+
 -- Tabla aulas
 CREATE TABLE `nrtsig_dev`.`aulas` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -96,6 +102,16 @@ insert into asignaturas (id, nombre, create_at, descripcion, id_plan_carrera) va
 insert into asignaturas (id, nombre, create_at, descripcion, id_plan_carrera) values (default, 'Fisica II', current_date(), '', (select p.id from plan_carreras p where p.id_carrera = 1 and p.fecha_cierre is null));
 insert into asignaturas (id, nombre, create_at, descripcion, id_plan_carrera) values (default, 'Ingles I', current_date(), '', (select p.id from plan_carreras p where p.id_carrera = 1 and p.fecha_cierre is null));
 insert into asignaturas (id, nombre, create_at, descripcion, id_plan_carrera) values (default, 'Sistemas Operativos', current_date(), '', (select p.id from plan_carreras p where p.id_carrera = 1 and p.fecha_cierre is null));
+
+-- Actualizamos el nivel de las asignaturas
+update asignaturas set nivel = 1 where id > 7 and id < 8;
+update asignaturas set nivel = 2 where id > 7;
+
+-- Agregamos la columna tipo_asignatura
+ALTER TABLE asignaturas ADD COLUMN tipo_asignatura int;
+
+-- Actualizamos el tipo_asignatura de las asignatura
+update asignaturas set tipo_asignatura = 1 where id > 0;
 
 -- Tabla docentes
 CREATE TABLE `nrtsig_dev`.`docentes` (
@@ -180,6 +196,7 @@ insert into estados_asignaturas (id, codigo, descripcion, create_at) values(defa
 insert into estados_asignaturas (id, codigo, descripcion, create_at) values(default, 'R', 'Regular', current_date());
 insert into estados_asignaturas (id, codigo, descripcion, create_at) values(default, 'A', 'Aprobada', current_date());
 insert into estados_asignaturas (id, codigo, descripcion, create_at) values(default, 'AD', 'Aprobacion Directa', current_date());
+insert into estados_asignaturas (id, codigo, descripcion, create_at) values(default, 'EC', 'En Curso', current_date());
 
 -- Tabla inscripcion_asignatura
 CREATE TABLE `nrtsig_dev`.`inscripcion_asignatura` (
@@ -272,7 +289,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 -- Agregamos la foreign key a la tabla comision
-ALTER TABLE docente_comision_asignatura ADD CONSTRAINT `comision_fk` FOREIGN KEY (`id_comision`) 
+ALTER TABLE docente_comision_asignatura ADD CONSTRAINT `comision1_fk` FOREIGN KEY (`id_comision`) 
 REFERENCES comisiones (`id`)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
@@ -282,3 +299,16 @@ ALTER TABLE docente_comision_asignatura ADD CONSTRAINT `docentes_fk` FOREIGN KEY
 REFERENCES docentes (`id`)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
+
+-- Agregamos la columna dia_hora_cursado
+alter table docente_comision_asignatura add column dia_hora_cursado varchar(100);
+
+-- Agregamos la columna que indica si el profesor es de teoria, practica o auxiliar
+alter table docente_comision_asignatura add column funcion_profesor int;
+
+-- Agregamos la columna cantidad_horas_semanales
+alter table docente_comision_asignatura add column cantidad_horas_semanales int;
+
+-- Actualizamos la columna capacidad_actual 
+-- Se setean el campo a 0 debido a que iniciamos los datos y aun no hay ninguna inscripcion a ninguna comision
+update comisiones set capacidad_actual = 0 where id > 0;
