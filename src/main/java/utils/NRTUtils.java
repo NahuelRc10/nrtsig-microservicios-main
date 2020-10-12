@@ -57,4 +57,20 @@ public class NRTUtils {
         }
         return false;
     }
+
+	/**
+	 * Retorna true cuando una hora corresponde a un momento de dia
+	 */
+	public static boolean validaHora(String hora) {
+		String[] a = hora.split(":");
+		String fp = a[0].replace(" ", "");
+		String sp = a[1].replace(" ", "");
+		Integer firstPart = Integer.parseInt(fp);
+		Integer secondPart = Integer.parseInt(sp);
+		if ((firstPart >= 0 && firstPart <=24) && (secondPart >= 0 && secondPart <= 59)) {
+			return true;
+		}
+		return false;
+	}
+
 }

@@ -34,6 +34,9 @@ public class Comision {
 	@JsonIgnoreProperties(value = {"comision", "hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "comision", fetch = FetchType.LAZY)
 	private List<Aula> aulas;
+	@Column(name = "turno_cursado")
+	@NotNull
+	private Integer turnoCursado;   // 1 -> TURNO MAÑANA    // 2 -> TURNO TARDE     // 3 -> TURNO NOCHE
 
 	public Comision() {}
 	
@@ -93,4 +96,9 @@ public class Comision {
 	public List<Aula> getAulas() { return aulas; }
 
 	public void setAulas(List<Aula> aulas) { this.aulas = aulas; }
+
+	public Integer getTurnoCursado() { return turnoCursado; }
+
+	public void setTurnoCursado(Integer turnoCursado) { this.turnoCursado = turnoCursado; }
+
 }

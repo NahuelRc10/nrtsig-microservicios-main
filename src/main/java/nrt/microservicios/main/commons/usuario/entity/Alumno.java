@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import nrt.microservicios.main.commons.carrera.entity.InscripcionAsignatura;
 import nrt.microservicios.main.commons.carrera.entity.InscripcionCarrera;
 
 
@@ -82,9 +83,13 @@ public class Alumno {
 	@JsonIgnoreProperties(value = {"alumno", "hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "alumno", fetch = FetchType.LAZY)
 	private List<InscripcionCarrera> carreras;
+	@JsonIgnoreProperties(value = {"alumno", "hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "alumno", fetch = FetchType.LAZY)
+	private List<InscripcionAsignatura> asignaturas;
 	
 	public Alumno() {
 		this.carreras = new ArrayList<InscripcionCarrera>();
+		this.asignaturas = new ArrayList<>();
 	}
 	
 	@PrePersist
@@ -225,4 +230,11 @@ public class Alumno {
 		this.carreras = carreras;
 	}
 
+	public List<InscripcionAsignatura> getAsignaturas() {
+		return asignaturas;
+	}
+
+	public void setAsignaturas(List<InscripcionAsignatura> asignaturas) {
+		this.asignaturas = asignaturas;
+	}
 }

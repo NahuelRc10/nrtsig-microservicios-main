@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nrt.microservicios.main.commons.usuario.entity.Alumno;
 
 @Entity
@@ -27,18 +28,22 @@ public class InscripcionAsignatura {
 	@Column(name = "fecha_inscripcion")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaInscripcion;
+	@JsonIgnoreProperties(value = {"asignaturas", "carreras", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_alumno")
 	private Alumno alumno;
+	@JsonIgnoreProperties(value = {"alumnosInscriptos", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_plan")
 	private PlanCarrera planCarrera;
 	@ManyToOne
 	@JoinColumn(name = "id_estado")
 	private EstadoAsignatura estadoAsignatura;
+	@JsonIgnoreProperties(value = {"planCarrera", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_comision")
 	private Comision comision;
+	@JsonIgnoreProperties(value = {"alumnosInscriptos", "asignaturasHijas", "hibernateLazyInitializer", "handler"})
 	@ManyToOne
 	@JoinColumn(name = "id_asignatura")
 	private Asignatura asignatura;

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -40,15 +41,22 @@ public class Asignatura {
 	private Date createAt;
 	@Column(name = "nivel")
 	private Integer nivel;
-	@JsonIgnoreProperties(value = {"correlativa", "handler", "hibernateLazyInitializer"})
+//	@JsonIgnoreProperties(value = {"correlativa", "handler", "hibernateLazyInitializer"})
 	@OneToMany(mappedBy = "correlativa", fetch = FetchType.LAZY)
 	private List<AsignaturaCorrelativa> asignaturasHijas;
 	@ManyToOne
 	@JoinColumn(name = "id_plan_carrera")
 	private PlanCarrera planCarrera;
+	@Column(name = "tipo_asignatura")
+	@NotNull
+	private Integer tipoAsignatura;	// 1 -> Obligatoria		// 2 -> Electiva;
+	@JsonIgnoreProperties(value = {"planCarrera", "carrera", "planesCarrera", "carreras", "asignatura", "hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "asignatura", fetch = FetchType.LAZY)
+	private List<InscripcionAsignatura> alumnosInscriptos;
 
 	public Asignatura() {
 		this.asignaturasHijas = new ArrayList<AsignaturaCorrelativa>();
+		this.alumnosInscriptos = new ArrayList<>();
 	}
 
 	@PrePersist
@@ -112,4 +120,19 @@ public class Asignatura {
 		this.planCarrera = planCarrera;
 	}
 
+	public Integer getTipoAsignatura() {
+		return tipoAsignatura;
+	}
+
+	public void setTipoAsignatura(Integer tipoAsignatura) {
+		this.tipoAsignatura = tipoAsignatura;
+	}
+
+	public List<InscripcionAsignatura> getAlumnosInscriptos() {
+		return alumnosInscriptos;
+	}
+
+	public void setAlumnosInscriptos(List<InscripcionAsignatura> alumnosInscriptos) {
+		this.alumnosInscriptos = alumnosInscriptos;
+	}
 }
